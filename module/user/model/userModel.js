@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const config = require("./../../../helper/config");
-var uniqueValidator = require("mongoose-unique-validator");
+const uniqueValidator = require("mongoose-unique-validator");
 
 var userSchema = mongoose.Schema({
   walletAddress: {
@@ -24,6 +24,14 @@ var userSchema = mongoose.Schema({
     type: String,
     maxlength: [32, "Lastname can't exceed 32 characters"],
     default: "",
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
   },
 });
 

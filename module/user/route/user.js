@@ -6,6 +6,6 @@ const { check } = require("express-validator");
 router
   .route("/details")
   .get(userController.getUserDetails)
-  .post(userController.saveUserDetails);
+  .post([check('address').not().isEmpty()], userController.saveUserDetails);
 
 module.exports = router;

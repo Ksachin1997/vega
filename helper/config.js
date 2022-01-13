@@ -8,7 +8,7 @@ const config = {
     username: "",
     password: "",
     name: "ofm",
-    prefix: "vegavid_",
+    prefix: "ofm_",
   },
 };
 

@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 
 const config = require("./helper/config");
 const user = require("./module/user/route/user");
+const parse = require("./module/parse/route/parse");
 
 const app = express();
 
@@ -27,10 +28,10 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/user", user);
 
 app.get("/", (req, res) => res.status(200).json({ heartbeat: 200 }));
 app.use("/user", user);
+app.use("/parse", parse);
 
 app.listen(config.app.port, () =>
   console.log(`OFM_Backend running on port ${config.app.port}`)

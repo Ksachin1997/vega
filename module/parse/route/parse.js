@@ -7,6 +7,7 @@ const router = express.Router();
 router
   .use(uploadMiddleware.handleXlsxFile)
   .route("/addressFromFile")
-  .post(parseController.parseAddresses);
+  .post(parseController.parseAddresses)
+  .get(parseController.sendAddressTemplates);
 
 module.exports = router;

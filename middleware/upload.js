@@ -29,7 +29,7 @@ exports.handleXlsxFile = (req, res, next) => {
   uploadFile(req, res, function (err) {
     if (err) {
       return res
-        .status(400)
+        .status(200)
         .send({ status: false, data: {}, message: "Invalid file type" });
     }
     next();

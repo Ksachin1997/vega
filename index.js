@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -6,7 +7,9 @@ const mongoose = require("mongoose");
 const config = require("./helper/config");
 const user = require("./module/user/route/user");
 const parse = require("./module/parse/route/parse");
-
+const mail = require("./module/sendMail/route/sendMail");
+const authRoute = require("./startupRoutes/authRoutes")
+const userRoute = require("./startupRoutes/userRoutes")
 const app = express();
 
 /*
@@ -32,7 +35,9 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => res.status(200).json({ heartbeat: 200 }));
 app.use("/user", user);
 app.use("/parse", parse);
-
+app.use("/api", mail);
+app.use("/api/auth",authRoute);
+app.use("/api/user",userRoute);
 app.listen(config.app.port, () =>
   console.log(`OFM_Backend running on port ${config.app.port}`)
 );

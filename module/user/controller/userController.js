@@ -53,3 +53,87 @@ exports.saveUserDetails = async (req, res, next) => {
     });
   });
 };
+
+exports.addUserDetails = async (req, res, next) => {
+
+  try{
+    
+    let userRecord = []
+
+    for(let i = 0; i < req.body.length; i++){
+
+      let body = req.body[i] || {};
+
+      let userData = {}
+
+      userData.firstname = body.firstname || "";
+      userData.lastname = body.lastname || "";
+      userData.email = body.email || "";
+      userData.walletAddress = body.walletAddress || null;
+      userData.amountTransfered = body.amountTransfered || 0;
+      userData.transactionHash = body.transactionHash;
+      userData.transactionStatus = body.transactionHash !== "Declined" ? "pending" : "failed"
+      userData.transactionLink = body.transactionLink
+  
+      userData.adminId = req.user._id || req.user.user._id;
+
+      userRecord.push(userData)
+
+    }
+
+    //console.log(userRecord)
+
+    users.insertMany(userRecord).then(() => {    
+      return res.status(200).send("User details saved sucessfully") // Success
+    }).catch((err) => {
+      console.log("h",err)
+      return res.status(500).send("Some Error Occured, Please retry")
+    });
+
+  } catch(err) {
+    console.log(err)
+    return res.status(500).send("Internal Server Error")
+  }
+}
+
+exports.fetchUserDetails = async (req, res, next) => {
+
+  try{
+    let adminId = req.user._id || req.user.user._id;
+
+    let userDetails = await users.find({ adminId:adminId });
+
+    return res.status(200).send(userDetails);
+
+  } catch(err) {
+
+    return res.status(500).send("Internal Server Error")
+
+  }
+
+};
+
+exports.updateTransactionStatus = async (req, res, next) => {
+
+  try{
+
+    //console.log(req.body)
+
+    for(let i = 0; i < req.body.length; i++){
+
+      let body = req.body[i] || {}
+
+      await users.updateMany({transactionHash: body.transactionHash}, {transactionStatus: body.transactionStatus})
+
+    }
+
+    return res.status(200).send("Transaction Status Updated")
+
+
+  } catch (err) {
+
+    return res.status(500).send("Internal Server Error")
+
+  }
+
+}

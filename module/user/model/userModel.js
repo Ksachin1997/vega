@@ -1,13 +1,12 @@
 const mongoose = require("mongoose");
 const config = require("./../../../helper/config");
-const uniqueValidator = require("mongoose-unique-validator");
+//const uniqueValidator = require("mongoose-unique-validator");
 
 var userSchema = mongoose.Schema({
   walletAddress: {
     type: String,
     maxlength: [64, "Wallet address can't exceed 64 characters"],
     default: "",
-    unique: true,
     required: true,
   },
   firstname: {
@@ -25,6 +24,28 @@ var userSchema = mongoose.Schema({
     maxlength: [32, "Lastname can't exceed 32 characters"],
     default: "",
   },
+  amountTransfered: {
+    type: Number
+  },
+  adminId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'admin'
+  },
+  isNotified: {
+    type: Boolean,
+    default: false
+  },
+  transactionHash: {
+    type: String,
+    required: true
+  },
+  transactionStatus: {
+    type: String,
+    default: "pending"
+  },
+  transactionLink: {
+    type: String
+  },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -35,7 +56,7 @@ var userSchema = mongoose.Schema({
   },
 });
 
-userSchema.plugin(uniqueValidator);
+//userSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model(
   "users",

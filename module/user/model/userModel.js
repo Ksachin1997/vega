@@ -11,17 +11,17 @@ var userSchema = mongoose.Schema({
   },
   firstname: {
     type: String,
-    maxlength: [32, "Firstname can't exceed 32 characters"],
+    maxlength: [120, "Firstname can't exceed 32 characters"],
     default: "",
   },
   email: {
     type: String,
-    maxlength: [32, "Email can't exceed 32 characters"],
+    maxlength: [150, "Email can't exceed 32 characters"],
     default: "",
   },
   lastname: {
     type: String,
-    maxlength: [32, "Lastname can't exceed 32 characters"],
+    maxlength: [120, "Lastname can't exceed 32 characters"],
     default: "",
   },
   amountTransfered: {
